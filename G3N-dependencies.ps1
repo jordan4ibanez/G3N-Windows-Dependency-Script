@@ -36,7 +36,7 @@ if (Test-Path -Path "C:\Program Files\7-Zip\") {
 
 Write-Host "Checking if git is installed (default path - C:\Program Files\Git\). If Custom path, you can edit this script to reflect it."
 
-if (Test-Path -Path "C:\Program Files\Git\" -and Test-Path -Path "C:\Program Files\Git\bin\") {
+if ((Test-Path -Path "C:\Program Files\Git\") -and (Test-Path -Path "C:\Program Files\Git\bin\")) {
     
     Write-Host "Git was successfully detected."
 
