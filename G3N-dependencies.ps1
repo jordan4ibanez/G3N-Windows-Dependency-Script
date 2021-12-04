@@ -59,13 +59,13 @@ if ((Test-Path -Path "C:\Program Files\Git\") -and (Test-Path -Path "C:\Program 
 Write-Host "Grabbing mingw-w64 toolchain (7z formatted)..."
 
 #Yes, this is a very long address - this is also probably not the fastest around the world - but I can only pick the fastest that I can find for my location from sourceforge
-Invoke-WebRequest -uri "https://versaweb.dl.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-posix/seh/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z" -Outfile mingw-toolchain.7Z
+#Invoke-WebRequest -uri "https://versaweb.dl.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-posix/seh/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z" -Outfile mingw-toolchain.7Z
 
 Write-Host "Unzipping mingw-w64 toolchain..."
 
 set-alias sz "C:\Program Files\7-Zip\7z.exe"
 
-Invoke-Expression "sz x $currentPath\mingw-toolchain.7Z -o$currentPath\mingw-w64\ -y"
+#Invoke-Expression "sz x $currentPath\mingw-toolchain.7Z -o$currentPath\mingw-w64\ -y"
 
 
 
