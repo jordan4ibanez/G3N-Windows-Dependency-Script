@@ -1,12 +1,17 @@
-
 $currentPath = Get-Location
+
+if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Start-Process PowerShell -Verb RunAs "-NoProfile -ExecutionPolicy Bypass -Command `"cd '$pwd'; & '$PSCommandPath';`"";
+    exit;
+}
 
 #getting user confirmation so they do not accidentally put this somewhere crazy like C:\Windows\sysWOW64\
 
 Write-Host "This is designed to be run where you wish to store mingw-w64 for building. PLEASE ensure you are in the correct directory ($currentPath) before continuing."
+Write-Host "WARNING: You must not delete or move this folder, it stores your gcc compiler path in your user PATH for when you build your G3N programs."
 Write-Host "Requirements are: 7zip (default install path), Git (default install path), Go"
 
-$userConfirmation = Read-Host "Please type YES (caps included) if you wish to continue"
+$userConfirmation = Read-Host "Please type YES (capitalized) if you wish to continue"
 
 if ($userConfirmation -eq "YES" ) {
     Write-Host "User initialization accepted."
@@ -54,9 +59,11 @@ if ((Test-Path -Path "C:\Program Files\Git\") -and (Test-Path -Path "C:\Program 
     Exit -1
 }
 
+
 Write-Host "Grabbing mingw-w64 toolchain (7z formatted)..."
 
 #Yes, this is a very long address - this is also probably not the fastest around the world - but I can only pick the fastest that I can find for my location from sourceforge
+
 Invoke-WebRequest -uri "https://versaweb.dl.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-posix/seh/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z" -Outfile mingw-toolchain.7Z
 
 Write-Host "Unzipping mingw-w64 toolchain..."
@@ -65,9 +72,27 @@ set-alias sz "C:\Program Files\7-Zip\7z.exe"
 
 Invoke-Expression "sz x $currentPath\mingw-toolchain.7Z -o$currentPath\mingw-w64\ -y"
 
-Write-Host "mingw-w64 extraction successful. Temporarily adding to system path."
+#this needs to be permenant otherwise you will not be able to build G3N programs
 
-$env:Path += ";$currentPath\mingw-w64\mingw64\bin\"
+Write-Host "mingw-w64 extraction successful. Adding to user path."
+
+$oldPath = (Get-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name PATH).path
+$newPath = "$oldPath;$currentPath\mingw-w64\mingw64\bin"
+Set-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name PATH -Value $newPath
+
+#now we add it to the system path as well
+
+Write-Host "Adding to system path."
+
+$oldpath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).path
+$newPath = "$oldPath;$currentPath\mingw-w64\mingw64\bin"
+Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH -Value $newPath
+
+#now we add it to the internal temporary path so that G3N can build from this script
+
+$env:Path += ";$currentPath\mingw-w64\mingw64\bin"
+
+Write-Host "Successfully added to user and system path."
 
 Write-Host "Cloning G3N from Github..."
 
@@ -80,3 +105,14 @@ Invoke-Expression "go install ./..."
 #this takes us out of the go build directory
 Invoke-Expression "cd .."
 
+
+#finally clean up the directory of anything that would cause this to fail if ran again
+
+Write-Host "Cleaning up build files..."
+
+Remove-Item $currentPath\g3n-engine\ -Force -Recurse
+
+Remove-Item $currentPath\mingw-toolchain.7Z -Force 
+
+
+Read-Host "Installation successful. Press enter to exit."
