@@ -16,6 +16,8 @@ if ($userConfirmation -eq "YES" ) {
     Exit -1
 }
 
+#7zip install check
+
 Write-Host "Checking if 7zip is installed (default path - C:\Program Files\7-Zip\). If custom path, you can edit this script to reflect it."
 
 if (Test-Path -Path "C:\Program Files\7-Zip\") {
@@ -33,6 +35,7 @@ if (Test-Path -Path "C:\Program Files\7-Zip\") {
     Exit -1
 }
 
+#git install check
 
 Write-Host "Checking if git is installed (default path - C:\Program Files\Git\). If Custom path, you can edit this script to reflect it."
 
@@ -42,9 +45,9 @@ if ((Test-Path -Path "C:\Program Files\Git\") -and (Test-Path -Path "C:\Program 
 
 } else {
 
-    Write-Host "7zip was not detected. You can get 7zip here: https://www.7-zip.org"
+    Write-Host "Git was not detected. You can get Git here: https://git-scm.com"
 
-    Write-Host "Please run this script again when 7zip is installed or the path has been adjusted as this script requires it to extract mingw-w64. Thank you."
+    Write-Host "Please run this script again when Git is installed or the path has been adjusted as this script requires it to clone G3N. Thank you."
 
     Write-Host "Exiting."
 
@@ -55,7 +58,7 @@ if ((Test-Path -Path "C:\Program Files\Git\") -and (Test-Path -Path "C:\Program 
 
 Write-Host "Grabbing mingw-w64 toolchain (7z formatted)..."
 
-#Yes, this is a very long address
+#Yes, this is a very long address - this is also probably not the fastest around the world - but I can only pick the fastest that I can find for my location from sourceforge
 Invoke-WebRequest -uri "https://versaweb.dl.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-posix/seh/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z" -Outfile mingw-toolchain.7Z
 
 Write-Host "Unzipping mingw-w64 toolchain..."
