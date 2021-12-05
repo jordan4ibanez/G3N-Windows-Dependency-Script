@@ -94,6 +94,9 @@ $env:Path += ";$currentPath\mingw-w64\mingw64\bin"
 
 Write-Host "Successfully added to user and system path."
 
+
+#clone and cd into the go build directory
+
 Write-Host "Cloning G3N from Github..."
 
 Invoke-Expression "git clone https://github.com/g3n/engine g3n-engine"
@@ -103,16 +106,12 @@ Invoke-Expression "cd g3n-engine"
 Invoke-Expression "go install ./..."
 
 #this takes us out of the go build directory
+
 Invoke-Expression "cd .."
 
+#finally add OpenAL dynamic linked libraries to the system path for building
 
-#finally clean up the directory of anything that would cause this to fail if ran again
 
-Write-Host "Cleaning up build files..."
-
-Remove-Item $currentPath\g3n-engine\ -Force -Recurse
-
-Remove-Item $currentPath\mingw-toolchain.7Z -Force 
 
 
 Read-Host "Installation successful. Press enter to exit."
