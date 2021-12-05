@@ -99,7 +99,7 @@ Invoke-Expression "sz x $currentPath\mingw-toolchain.7Z -o$currentPath\mingw-w64
 Write-Host "mingw-w64 extraction successful. Adding to user path."
 
 $oldPath = (Get-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name PATH).path
-$newPath = "$oldPath;$currentPath\mingw-w64\mingw64\bin"
+$newPath = "$oldPath;$currentPath\mingw-w64\mingw64\bin\"
 Set-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name PATH -Value $newPath
 
 #now we add it to the system path as well
@@ -107,14 +107,14 @@ Set-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name PATH -Val
 Write-Host "Adding to system path."
 
 $oldpath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).path
-$newPath = "$oldPath;$currentPath\mingw-w64\mingw64\bin"
+$newPath = "$oldPath;$currentPath\mingw-w64\mingw64\bin\"
 Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH -Value $newPath
 
 #now we add it to the internal temporary path so that G3N can build from this script
 
 Write-Host "Adding to temporary path, used for initial build."
 
-$env:Path += ";$currentPath\mingw-w64\mingw64\bin"
+$env:Path += ";$currentPath\mingw-w64\mingw64\bin\"
 
 Write-Host "Successfully added to user and system path."
 
@@ -147,14 +147,14 @@ Write-Host "Adding openAL dlls to user path."
 
 #user PATH
 $oldPath = (Get-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name PATH).path
-$newPath = "$oldPath;$currentPath\g3n-engine\audio\windows\bin"
+$newPath = "$oldPath;$currentPath\g3n-engine\audio\windows\bin\"
 Set-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name PATH -Value $newPath
 
 Write-Host "Adding openAL dlls to system path."
 
 #system PATH
 $oldpath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).path
-$newPath = "$oldPath;$currentPath\g3n-engine\audio\windows\bin"
+$newPath = "$oldPath;$currentPath\g3n-engine\audio\windows\bin\"
 Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH -Value $newPath
 
 
