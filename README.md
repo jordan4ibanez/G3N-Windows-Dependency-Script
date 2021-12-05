@@ -5,23 +5,23 @@ This is designed to be run-in-place, as in you set it somewhere you don't find g
 
 For now, this path will add duplicates to your Windows %PATH% when you run it more than once. If you do not want this, you can simply:
 
-- Type in "path" (without quotes) into the start menu
-- Click "Edit the system environmental variables
-- In the System Properties window, on the bottom there will be a button called "Environment Variables..."
-- Click that button
-- Under "User variables for USERNAMEHERE" click Path
-- Click the upper "Edit..." button
-- **BE EXTREMELY CAREFUL IN THIS WINDOW!**
-- The old paths that were added in (there are two of them next to each other) are there. Click them to highlight, then click delete
-- Click OK when you're done
-- Under "System variables" click Path
-- Click the lower "Edit..." button
-- **BE EXTREMELY CAREFUL IN THIS WINDOW!**
-- The old paths that were added in (there are two of them next to each other) are there. Click them to highlight, then click delete
-- Click OK when you're done
-- Click OK
-- Click OK (Yes I am giving verbose instructions)
-- You should now be able to run the script again without duplicates in the System and User paths. Enjoy!
+1. Type in "path" (without quotes) into the start menu
+2. Click "Edit the system environmental variables
+3. In the System Properties window, on the bottom there will be a button called "Environment Variables..."
+4. Click that button
+5. Under "User variables for USERNAMEHERE" click Path
+6. Click the upper "Edit..." button
+7. **BE EXTREMELY CAREFUL IN THIS WINDOW!**
+8. The old paths that were added in (there are two of them next to each other) are there. Click them to highlight, then click delete
+9. Click OK when you're done
+10. Under "System variables" click Path
+11. Click the lower "Edit..." button
+12. **BE EXTREMELY CAREFUL IN THIS WINDOW!**
+13. The old paths that were added in (there are two of them next to each other) are there. Click them to highlight, then click delete
+14. Click OK when you're done
+15. Click OK
+16. Click OK (Yes I am giving verbose instructions)
+17. You should now be able to run the script again without duplicates in the System and User paths. Enjoy!
 
 
 I recommend \My Documents\
