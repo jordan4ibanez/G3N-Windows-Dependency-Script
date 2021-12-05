@@ -22,7 +22,7 @@ Git: https://git-scm.com
 
 ### Duplicate %PATH% variables when running the script more than once
 
-## For now, this path will add duplicates to your Windows %PATH% when you run it more than once. If you do not want this, you can simply:
+#### For now, this path will add duplicates to your Windows %PATH% when you run it more than once. If you do not want this, you can simply:
 
 1. Type in "path" (without quotes) into the start menu
 2. Click "Edit the system environmental variables
