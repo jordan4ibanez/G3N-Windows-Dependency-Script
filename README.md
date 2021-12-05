@@ -1,7 +1,9 @@
 # G3N-Win64-Dependency-Script
  This is a simple script I created so Windows users do not have to fuss about with installing G3N and they can install it as easily as on Linux.
 
-This is designed to be run-in-place, as in you set it, run the script, and never look at it again until there's a major update.
+This is designed to be run-in-place, as in you set it somewhere you don't find gets in the way, run the script, and never look at it again until there's a major update.
+
+I recommend \My Documents\
 
 Required software:
 
