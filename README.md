@@ -15,6 +15,6 @@ Git: https://git-scm.com
 
 ### VSCODE:
 
-$ the term 'gcc' is not recognized as the name of a cmdlet
+    $ the term 'gcc' is not recognized as the name of a cmdlet
 
 This is very simple, if you run gcc in command prompt, you will notice it works there. What you have to do is restart vscode, then close the open powershell terminals and open a new one to reload the environment.
