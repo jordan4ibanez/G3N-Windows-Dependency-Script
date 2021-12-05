@@ -5,6 +5,8 @@ This is designed to be run-in-place, as in you set it somewhere you don't find g
 
 I recommend \My Documents\
 
+** It is HIGHLY recommended you restart your computer after running this to reload your system's environment **
+
 Required software:
 
 It is highly recommended you use the default install locations unless you want to rewrite part of the script for your specific Windows environment.
