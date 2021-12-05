@@ -8,8 +8,8 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 #getting user confirmation so they do not accidentally put this somewhere crazy like C:\Windows\sysWOW64\
 
 Write-Host "This is designed to be run where you wish to store mingw-w64 for building. PLEASE ensure you are in the correct directory ($currentPath) before continuing."
-Write-Host "WARNING: You must not delete or move this folder, it stores your gcc compiler path in your user PATH for when you build your G3N programs."
-Write-Host "Requirements are: 7zip (default install path), Git (default install path), Go"
+Write-Host "WARNING: You must not delete or move this folder, it stores your gcc compiler and openAL path in your user and system PATH for when you build your G3N programs."
+Write-Host "Requirements are: 7zip (default install path), Git (default install path), Go (default install path)"
 
 $userConfirmation = Read-Host "Please type YES (capitalized) if you wish to continue"
 
@@ -20,6 +20,28 @@ if ($userConfirmation -eq "YES" ) {
 
     Exit -1
 }
+
+
+#go install check
+
+Write-Host "Checking if Go is installed (default path - C:\Program Files\Go\). If custom path, you can edit this script to reflect it."
+
+if (Test-Path -Path "C:\Program Files\Go\") {
+    
+    Write-Host "Go was successfully detected."
+
+} else {
+
+    Write-Host "Go was not detected. You can get Go here: https://go.dev"
+
+    Write-Host "Please run this script again when Go is installed or the path has been adjusted as this script requires it to build G3N. Thank you."
+
+    Write-Host "Exiting."
+
+    Exit -1
+}
+
+
 
 #7zip install check
 
@@ -90,10 +112,20 @@ Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Co
 
 #now we add it to the internal temporary path so that G3N can build from this script
 
+Write-Host "Adding to temporary path, used for initial build."
+
 $env:Path += ";$currentPath\mingw-w64\mingw64\bin"
 
 Write-Host "Successfully added to user and system path."
 
+
+#if old g3n engine is not cleaned, the script will crash
+if (Test-Path -Path "$currentPath\g3n-engine\") {
+
+    Write-Host "Cleaning up old build of g3n-engine."
+
+    Remove-Item $currentPath\g3n-engine\ -Force -Recurse
+}
 
 #clone and cd into the go build directory
 
@@ -111,7 +143,19 @@ Invoke-Expression "cd .."
 
 #finally add OpenAL dynamic linked libraries to the system path for building
 
+Write-Host "Adding openAL dlls to user path."
 
+#user PATH
+$oldPath = (Get-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name PATH).path
+$newPath = "$oldPath;$currentPath\g3n-engine\audio\windows\bin"
+Set-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name PATH -Value $newPath
+
+Write-Host "Adding openAL dlls to system path."
+
+#system PATH
+$oldpath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).path
+$newPath = "$oldPath;$currentPath\g3n-engine\audio\windows\bin"
+Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH -Value $newPath
 
 
 Read-Host "Installation successful. Press enter to exit."
