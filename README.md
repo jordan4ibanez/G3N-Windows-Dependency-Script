@@ -5,7 +5,7 @@ This is designed to be run-in-place, as in you set it somewhere you don't find g
 
 I recommend \My Documents\
 
-** It is HIGHLY recommended you restart your computer after running this to reload your system's environment **
+**It is HIGHLY recommended you restart your computer after running this to reload your system's environment**
 
 Required software:
 
