@@ -11,9 +11,9 @@ Go: https://go.dev
 
 Git: https://git-scm.com
 
-### Issue:
+## Issue/Solution:
 
-## VSCODE:
+### VSCODE:
 
 $ the term 'gcc' is not recognized as the name of a cmdlet
 
